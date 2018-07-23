@@ -7,16 +7,16 @@ class Db{
 	public static function getInstance(){
 		if(!self::$instance){
 			try {
-				$host = 'localhost';
-				$dbname = 'parseSites';
-				$dbuser = 'root';
-				$dbpassword =''; 
-				$dsn='mysql:host='.$host.';dbname='.$dbname;
-				self::$instance=new PDO($dsn, $dbuser,$dbpassword);	
+					$host = 'localhost';
+					$dbname = 'parseSites';
+					$dbuser = 'root';
+					$dbpassword =''; 
+					$dsn='mysql:host='.$host.';dbname='.$dbname;
+					self::$instance=new PDO($dsn, $dbuser,$dbpassword);	
 				} catch (PDOException $e) {
 					$instance=null;	
 				}
 			}	
-			return self::$instance;
-		}
+		return self::$instance;
 	}
+}
