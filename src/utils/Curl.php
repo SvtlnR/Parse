@@ -14,16 +14,8 @@ class  Curl{
 	public function call($url='',$method = 'get', $params=[]){
 		$method=mb_strtolower($method);
 		curl_setopt($this->instance, CURLOPT_URL, $url); 
-		curl_setopt($this->instance, CURLOPT_RETURNTRANSFER, 1);
-		
+		curl_setopt($this->instance, CURLOPT_RETURNTRANSFER, 1);		
 		curl_setopt($this->instance, CURLOPT_HEADER, false);
-		//curl_setopt($this->instance, CURLOPT_SSL_VERIFYPEER, false);
-
-
-
-
-
-
 		if($method===self::METHOD_POST){
 			curl_setopt($this->instance, CURLOPT_POST, true);
 	    	curl_setopt($this->instance, CURLOPT_POSTFIELDS, http_build_query($params));

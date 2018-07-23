@@ -14,11 +14,9 @@ class Db{
 				$dsn='mysql:host='.$host.';dbname='.$dbname;
 				self::$instance=new PDO($dsn, $dbuser,$dbpassword);	
 				} catch (PDOException $e) {
-					//ErrorOutput::err_out($e->getMessage());
 					$instance=null;	
 				}
 			}	
 			return self::$instance;
 		}
-
 	}

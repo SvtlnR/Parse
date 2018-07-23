@@ -3,19 +3,13 @@ error_reporting(E_ALL);
 mb_internal_encoding("UTF-8");
 use Symfony\Component\DomCrawler\Crawler;
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
-
-//$config=require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php' ;
-//\parser\utils\LocalStorage::set('applicationConfig', $config);
-
-
 $curl = new \parser\utils\Curl();
 $list=[];
 $baseUrl = 'https://top100.rambler.ru';
 $isContent=true;
 $pageIndex=1;
 $con=parser\utils\Db::getInstance();
-            $db=new parser\ParseDb($con);
-
+$db=new parser\ParseDb($con);
 do{
 	$params=[
 		'query'=>'веб-студия',
@@ -36,7 +30,6 @@ do{
         	$list[$i]['visitors'] = 0;
         	$list[$i]['popularity'] = 0;   
         	$list[$i]['views'] = 0;   
-
         	$node
             	->filter('.link_catalogue-site-link')
             	->each(function (Crawler $node) use ($i, &$list, $baseUrl) {
@@ -76,11 +69,8 @@ do{
                 $list[$i]['popularity'] =  $pop;
                   
             });
-        });
-
-			
-        foreach ($list as $i =>$item) {
-        	 
+        });	
+        foreach ($list as $i =>$item) {   	 
     		$db->addRow([
     			'name' =>$item['name'],
     			'url' =>$item['url'],
@@ -90,51 +80,9 @@ do{
     			'popularity' =>$item['popularity'],
     		]);
         }
-
-
-                
-            // $list[$i]['visitors'] = $node->filter('.projects-table__cell[data-content="visitors"]')->text();
-            // $list[$i]['views'] = $node->filter('.projects-table__cell[data-content="views"]')->text();
-            // $list[$i]['popularity'] = $node->filter('.projects-table__cell[data-content="popularity"]')->text();
-           
-
-
-			echo $pageIndex;
 		$pageIndex++;
 	}
-
-
-	
 }while($isContent);
-//	$url=$domElement->filter('td.projects-table__cell.projects-table__cell_title>div.projects-table__title-wrapper>div.projects-table__textlines>span.projects-table__textline>a.link link_catalogue-site-link')->node;
-	//$visitors=$domElement->filter('td.projects-table__cell>span.projects-table__textline')->text();
-	//$url=$url->filter('td.projects-table__cell.projects-table__cell_title>a.link.link_catalogue-site-link');
-	//$url=$domElement;
-    //var_dump($url->text());
-    //$domElement->hasChildNodes();
-    //$anchor=$domElement->filter('a');
-//$url = $crawler->filter('span .projects-table__textline')->text();
-//echo $url;
-//foreach ($crawler as $domElement) {
-//	$url = trim($crawler->filter('a .link .link_catalogue-site-link')->text());
-//	echo $url;
-//}
 
-
-// $title = trim($crawler->filter('h1')->text());
-// $genres = $crawler->filter('[itemprop="genre"] a')->extract(['_text']);
-// $description = trim($crawler->filter('[itemprop="description"]')->text());
-
-//   $crawler->filter('#titleDetails .txt-block')->each(function (Crawler $crawler) {
-//            foreach ($crawler->children() as $node) {
-//                $node->parentNode->removeChild($node);
-//            }
-//         });
-// }
-
-
-//echo "<pre>";
-
-//print_r(\parser\utils\LocalStorage::getAll());
 
         
